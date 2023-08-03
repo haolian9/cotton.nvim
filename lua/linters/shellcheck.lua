@@ -1,6 +1,10 @@
 local Collector = require("linters.Collector")
 
+local api = vim.api
+
 local M = setmetatable({}, Collector)
+
+M.ns = api.nvim_create_namespace("linters.shellcheck")
 
 function M:cmd(outfile) return "shellcheck", { "--format=json", outfile } end
 

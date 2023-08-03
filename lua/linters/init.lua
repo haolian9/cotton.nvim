@@ -5,6 +5,7 @@ local M = {}
 
 local jelly = require("infra.jellyfish")("linters")
 local prefer = require("infra.prefer")
+local Regulator = require("infra.Regulator")
 
 local api = vim.api
 
@@ -14,8 +15,13 @@ local availables = {
   sh = { "shellcheck" },
 }
 
+local regulator = Regulator(1024)
+
 function M.lint()
   local bufnr = api.nvim_get_current_buf()
+  if regulator:throttled(bufnr) then return jelly.debug("no changes for a new linting") end
+  regulator:update(bufnr) -- since linting will not change the buffer
+
   local ft = prefer.bo(bufnr, "filetype")
 
   local linters = availables[ft]

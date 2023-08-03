@@ -10,6 +10,7 @@ local api = vim.api
 local uv = vim.loop
 
 ---@class linters.Collector
+---@field ns integer
 local Collector = {}
 do
   Collector.__index = Collector
@@ -26,7 +27,9 @@ do
   ---@return vim.Diagnostic
   function Collector:check_to_diagnostic(bufnr, check) error("not implemented") end
 
+  ---@param bufnr integer
   function Collector:__call(bufnr)
+    assert(bufnr ~= nil and bufnr ~= 0)
     local outfile = os.tmpname()
     assert(cthulhu.nvim.dump_buffer(bufnr, outfile))
 
@@ -38,15 +41,14 @@ do
       if rc == 0 then
         checks = {}
       else
-        assert(rc == 1)
+        assert(rc == 1) --todo: not all linters follow this convention
         checks = self:populate_checks(fn.join(chunks))
       end
 
       vim.schedule(function()
-        local ns = api.nvim_create_namespace("linters.ruff")
         local digs = fn.tolist(fn.map(function(check) return self:check_to_diagnostic(bufnr, check) end, checks))
         jelly.debug("feed %d diagnostics to nvim", #digs)
-        vim.diagnostic.set(ns, bufnr, digs)
+        vim.diagnostic.set(self.ns, bufnr, digs)
       end)
 
       uv.fs_unlink(outfile)
@@ -57,4 +59,5 @@ do
   end
 end
 
+---@overload fun(bufnr: integer)
 return Collector

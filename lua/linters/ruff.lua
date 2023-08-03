@@ -1,6 +1,10 @@
 local Collector = require("linters.Collector")
 
+local api = vim.api
+
 local M = setmetatable({}, Collector)
+
+M.ns = api.nvim_create_namespace("linters.ruff")
 
 ---rows are 1-based
 ---@class linters.ruff.Check.Edit
@@ -31,10 +35,8 @@ end
 ---@param check linters.ruff.Check
 ---@return vim.Diagnostic
 function M:check_to_diagnostic(bufnr, check)
-  local lnum = check.location.row - 1
-  local end_lnum = check.end_location.row - 1
   local severity = "WARN" --todo: ruff does not provide a severity field
-  return { bufnr = bufnr, lnum = lnum, end_lnum = end_lnum, col = check.location.column, end_col = check.end_location.column, severity = severity, message = check.message, code = check.code }
+  return { bufnr = bufnr, lnum = check.location.row - 1, end_lnum = check.end_location.row - 1, col = check.location.column - 1, end_col = check.end_location.column - 1, severity = severity, message = check.message, code = check.code }
 end
 
 return M
