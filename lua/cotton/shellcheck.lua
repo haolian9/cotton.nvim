@@ -1,15 +1,15 @@
-local Collector = require("linters.Collector")
+local Collector = require("cotton.Collector")
 
 local api = vim.api
 
 local M = setmetatable({}, Collector)
 
-M.ns = api.nvim_create_namespace("linters.shellcheck")
+M.ns = api.nvim_create_namespace("cotton.shellcheck")
 
 function M:cmd(outfile) return "shellcheck", { "--format=json", outfile } end
 
 do
-  ---@class Check
+  ---@class cotton.shellcheck.Check
   ---@field file string
   ---@field line integer
   ---@field endLine integer
@@ -20,7 +20,7 @@ do
   ---@field message string
 
   ---@param plain string
-  ---@return Check[]
+  ---@return cotton.shellcheck.Check[]
   function M:populate_checks(plain) return vim.json.decode(plain) end
 end
 
@@ -30,7 +30,7 @@ do
     ["error"] = "ERROR",
   }
 
-  ---@param check Check
+  ---@param check cotton.shellcheck.Check
   ---@return vim.Diagnostic
   function M:check_to_diagnostic(bufnr, check)
     local lnum = check.line - 1

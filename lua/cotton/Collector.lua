@@ -2,14 +2,14 @@
 
 local cthulhu = require("cthulhu")
 local fn = require("infra.fn")
-local jelly = require("infra.jellyfish")("linters.collector", "debug")
+local jelly = require("infra.jellyfish")("cotton.collector", "debug")
 local listlib = require("infra.listlib")
 local subprocess = require("infra.subprocess")
 
 local api = vim.api
 local uv = vim.loop
 
----@class linters.Collector
+---@class cotton.Collector
 ---@field ns integer
 local Collector = {}
 do
