@@ -1,3 +1,4 @@
+弹棉花
 
 an example to integrate external linters into nvim
 
@@ -19,4 +20,4 @@ an example to integrate external linters into nvim
 * external linters: ruff, shellcheck
 
 ## usage
-* `:lua require'linters'.lint()`
+* `:lua require'cotton'.lint()`
