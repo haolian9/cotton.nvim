@@ -35,7 +35,7 @@ end
 ---@param check cotton.ruff.Check
 ---@return vim.Diagnostic
 function M:check_to_diagnostic(bufnr, check)
-  local severity = "WARN" --todo: ruff does not provide a severity field
+  local severity = "WARN" --NB: ruff does not provide a severity field
   return { bufnr = bufnr, lnum = check.location.row - 1, end_lnum = check.end_location.row - 1, col = check.location.column - 1, end_col = check.end_location.column - 1, severity = severity, message = check.message, code = check.code }
 end
 

@@ -1,6 +1,3 @@
---todo: run on save?
---todo: run on leaving inset mode
-
 local M = {}
 
 local jelly = require("infra.jellyfish")("cotton")

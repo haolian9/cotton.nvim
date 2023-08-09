@@ -41,7 +41,7 @@ do
       if rc == 0 then
         checks = {}
       else
-        assert(rc == 1) --todo: not all linters follow this convention
+        assert(rc == 1) --NB: not all linters follow this convention
         checks = self:populate_checks(fn.join(chunks))
       end
 
