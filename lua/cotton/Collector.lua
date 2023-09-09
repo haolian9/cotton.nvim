@@ -2,7 +2,7 @@
 
 local cthulhu = require("cthulhu")
 local fn = require("infra.fn")
-local jelly = require("infra.jellyfish")("cotton.collector", "debug")
+local jelly = require("infra.jellyfish")("cotton.collector", "info")
 local listlib = require("infra.listlib")
 local subprocess = require("infra.subprocess")
 
