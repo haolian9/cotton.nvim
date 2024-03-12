@@ -23,7 +23,7 @@ M.ns = api.nvim_create_namespace("cotton.ruff")
 ---@field noqa_row integer
 ---@field url string
 
-function M:cmd(outfile) return "ruff", { "--ignore-noqa", "--target-version", "py311", "--format=json", outfile } end
+function M:cmd(outfile) return "ruff", { "--ignore-noqa", "--target-version", "py311", "--output-format=json", outfile } end
 
 ---@param plain string
 ---@return cotton.ruff.Check[]
