@@ -1,8 +1,7 @@
-local Collector = require("cotton.Collector")
+local M = setmetatable({}, require("cotton.Collector"))
+local fn = require("infra.fn")
 
 local api = vim.api
-
-local M = setmetatable({}, Collector)
 
 M.ns = api.nvim_create_namespace("cotton.ruff")
 
@@ -25,11 +24,12 @@ M.ns = api.nvim_create_namespace("cotton.ruff")
 
 function M:cmd(outfile) return "ruff", { "--ignore-noqa", "--target-version", "py311", "--output-format=json", outfile } end
 
----@param plain string
+---@param plains string[]
 ---@return cotton.ruff.Check[]
-function M:populate_checks(plain)
-  assert(plain ~= nil and plain ~= "")
-  return vim.json.decode(plain)
+function M:populate_checks(plains)
+  --ruff outputs: '[check,check]'
+  assert(#plains > 0)
+  return vim.json.decode(fn.join(plains))
 end
 
 ---@param check cotton.ruff.Check

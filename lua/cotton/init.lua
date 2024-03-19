@@ -10,6 +10,7 @@ local availables = {
   python = { "ruff" },
   bash = { "shellcheck" },
   sh = { "shellcheck" },
+  lua = { "selene" },
 }
 
 local regulator = Regulator(1024)

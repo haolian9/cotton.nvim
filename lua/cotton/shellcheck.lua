@@ -1,8 +1,6 @@
-local Collector = require("cotton.Collector")
+local M = setmetatable({}, require("cotton.Collector"))
 
 local api = vim.api
-
-local M = setmetatable({}, Collector)
 
 M.ns = api.nvim_create_namespace("cotton.shellcheck")
 
@@ -19,15 +17,20 @@ do
   ---@field code integer
   ---@field message string
 
-  ---@param plain string
+  ---@param plains string[]
   ---@return cotton.shellcheck.Check[]
-  function M:populate_checks(plain) return vim.json.decode(plain) end
+  function M:populate_checks(plains)
+    --shellcheck outputs: '[check,check]'
+    assert(#plains == 1)
+    return vim.json.decode(plains[1])
+  end
 end
 
 do
   local level_severity = {
     warning = "WARN",
     ["error"] = "ERROR",
+    info = "INFO",
   }
 
   ---@param check cotton.shellcheck.Check

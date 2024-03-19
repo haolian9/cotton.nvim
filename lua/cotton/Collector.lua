@@ -19,9 +19,9 @@ do
   ---@return string,string[] @bin, args
   function Collector:cmd(outfile) error("not implemented") end
 
-  ---@param plain string
+  ---@param plains string[]
   ---@return any[]
-  function Collector:populate_checks(plain) error("not implemented") end
+  function Collector:populate_checks(plains) error("not implemented") end
 
   ---@param check any
   ---@return vim.Diagnostic
@@ -37,12 +37,12 @@ do
     local function stdout_callback(output) listlib.extend(chunks, output) end
 
     local function on_exit(rc)
-      local checks = {}
+      local checks
       if rc == 0 then
         checks = {}
       else
         assert(rc == 1) --NB: not all linters follow this convention
-        checks = self:populate_checks(fn.join(chunks))
+        checks = self:populate_checks(chunks)
       end
 
       vim.schedule(function()
