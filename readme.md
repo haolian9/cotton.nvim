@@ -4,21 +4,23 @@
 an example to integrate external linters into nvim
 
 ## features
-* lint against the current content of buffers, no need to save first
-* utilize vim.diagnostic, rather than flush quickfix/location list
+* lint to the current content of buffers, no need to save first
+* utilize vim.diagnostic, rather than flooding qf/loclist directly
 * run multiple linters in parallel by spawning processes
-* no overhead to go through lsp protocol
+* no going through lsp protocol, vim.lsp
+* supported filetypes: python, bash, lua
 
 ## status
-* it just works(tm)
-* it is feature-frozen
+* just works
+* feature-complete
+* just an example
 
 ## prerequisites
 * linux
 * nvim 0.9.*
 * haolian9/infra.nvim
 * haolian9/cthulhu.nvim
-* external linters: ruff, shellcheck
+* ruff, shellcheck, selene
 
 ## usage
 * `:lua require'cotton'.lint()`
