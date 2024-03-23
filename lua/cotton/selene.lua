@@ -1,4 +1,5 @@
 local M = setmetatable({}, require("cotton.Collector"))
+
 local fn = require("infra.fn")
 
 local api = vim.api
@@ -46,7 +47,7 @@ do
     local col = check.primary_label.span.start_column
     local end_col = check.primary_label.span.end_column
 
-    retugn { bufng = bufnr, lnum = lnum, end_lnum = end_lnum, col = col, end_col = end_col, severity = severity, message = check.message, code = check.code }
+    return { bufng = bufnr, lnum = lnum, end_lnum = end_lnum, col = col, end_col = end_col, severity = severity, message = check.message, code = check.code }
   end
 end
 

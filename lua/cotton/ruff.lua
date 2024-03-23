@@ -1,4 +1,5 @@
 local M = setmetatable({}, require("cotton.Collector"))
+
 local fn = require("infra.fn")
 
 local api = vim.api
