@@ -45,13 +45,13 @@ do
         checks = self:populate_checks(chunks)
       end
 
+      uv.fs_unlink(outfile)
+
       vim.schedule(function()
         local digs = fn.tolist(fn.map(function(check) return self:check_to_diagnostic(bufnr, check) end, checks))
         jelly.debug("feed %d diagnostics to nvim", #digs)
         vim.diagnostic.set(self.ns, bufnr, digs)
       end)
-
-      uv.fs_unlink(outfile)
     end
 
     local bin, args = self:cmd(outfile)
