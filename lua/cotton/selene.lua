@@ -1,6 +1,6 @@
 local M = setmetatable({}, require("cotton.Collector"))
 
-local fn = require("infra.fn")
+local itertools = require("infra.itertools")
 
 local api = vim.api
 
@@ -29,7 +29,7 @@ function M:cmd(outfile) return "selene", { "--no-summary", "--display-style=json
 function M:populate_checks(plains)
   --selene outputs: 'check\ncheck'
   assert(#plains > 0)
-  return fn.tolist(fn.map(vim.json.decode, plains))
+  return itertools.tolist(itertools.map(vim.json.decode, plains))
 end
 
 do

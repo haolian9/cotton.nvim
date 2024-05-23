@@ -1,6 +1,5 @@
 local M = setmetatable({}, require("cotton.Collector"))
-
-local fn = require("infra.fn")
+local itertools = require("infra.itertools")
 
 local api = vim.api
 
@@ -30,7 +29,7 @@ function M:cmd(outfile) return "ruff", { "--ignore-noqa", "--target-version", "p
 function M:populate_checks(plains)
   --ruff outputs: '[check,check]'
   assert(#plains > 0)
-  return vim.json.decode(fn.join(plains))
+  return vim.json.decode(itertools.join(plains))
 end
 
 ---@param check cotton.ruff.Check

@@ -1,7 +1,7 @@
 ---@diagnostic disable: unused-local
 
 local cthulhu = require("cthulhu")
-local fn = require("infra.fn")
+local itertools = require("infra.itertools")
 local jelly = require("infra.jellyfish")("cotton.collector", "info")
 local listlib = require("infra.listlib")
 local subprocess = require("infra.subprocess")
@@ -48,7 +48,7 @@ do
       uv.fs_unlink(outfile)
 
       vim.schedule(function()
-        local digs = fn.tolist(fn.map(function(check) return self:check_to_diagnostic(bufnr, check) end, checks))
+        local digs = itertools.tolist(itertools.map(function(check) return self:check_to_diagnostic(bufnr, check) end, checks))
         jelly.debug("feed %d diagnostics to nvim", #digs)
         vim.diagnostic.set(self.ns, bufnr, digs)
       end)
