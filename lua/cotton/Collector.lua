@@ -33,10 +33,19 @@ do
     local outfile = os.tmpname()
     assert(cthulhu.nvim.dump_buffer(bufnr, outfile))
 
+    local stdout_closed = false
     local chunks = {}
-    local function stdout_callback(output) listlib.extend(chunks, output) end
 
+    ---@param data? string
+    local function on_stdout(data)
+      if data ~= nil then return table.insert(chunks, data) end
+      stdout_closed = true
+    end
+
+    ---@param rc integer
     local function on_exit(rc)
+      assert(stdout_closed)
+
       local checks
       if rc == 0 then
         checks = {}
@@ -55,7 +64,7 @@ do
     end
 
     local bin, args = self:cmd(outfile)
-    subprocess.spawn(bin, { args = args }, stdout_callback, on_exit)
+    subprocess.spawn(bin, { args = args }, on_stdout, on_exit)
   end
 end
 
