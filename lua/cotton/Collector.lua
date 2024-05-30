@@ -7,7 +7,7 @@ local listlib = require("infra.listlib")
 local subprocess = require("infra.subprocess")
 
 local api = vim.api
-local uv = vim.loop
+local uv = vim.uv
 
 ---@class cotton.Collector
 ---@field ns integer
