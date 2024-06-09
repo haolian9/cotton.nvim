@@ -1,9 +1,8 @@
 local cthulhu = require("cthulhu")
 local its = require("infra.its")
+local iuv = require("infra.iuv")
 local jelly = require("infra.jellyfish")("cotton.collector", "info")
 local subprocess = require("infra.subprocess")
-
-local uv = vim.uv
 
 ---@class cotton.Collector
 ---@field ns integer
@@ -52,7 +51,7 @@ do
         checks = self:populate_checks(chunks)
       end
 
-      uv.fs_unlink(outfile)
+      iuv.fs_unlink(outfile)
 
       local digs = its(checks):map(function(check) return self:check_to_diagnostic(bufnr, check) end):tolist()
 
