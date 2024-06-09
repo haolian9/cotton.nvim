@@ -1,18 +1,16 @@
----@diagnostic disable: unused-local
-
 local cthulhu = require("cthulhu")
-local itertools = require("infra.itertools")
+local its = require("infra.its")
 local jelly = require("infra.jellyfish")("cotton.collector", "info")
-local listlib = require("infra.listlib")
 local subprocess = require("infra.subprocess")
 
-local api = vim.api
 local uv = vim.uv
 
 ---@class cotton.Collector
 ---@field ns integer
 local Collector = {}
 do
+  ---@diagnostic disable: unused-local
+
   Collector.__index = Collector
 
   ---@param outfile string
@@ -56,8 +54,9 @@ do
 
       uv.fs_unlink(outfile)
 
+      local digs = its(checks):map(function(check) return self:check_to_diagnostic(bufnr, check) end):tolist()
+
       vim.schedule(function()
-        local digs = itertools.tolist(itertools.map(function(check) return self:check_to_diagnostic(bufnr, check) end, checks))
         jelly.debug("feed %d diagnostics to nvim", #digs)
         vim.diagnostic.set(self.ns, bufnr, digs)
       end)
