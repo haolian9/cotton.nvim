@@ -2,6 +2,7 @@ local M = {}
 
 local jelly = require("infra.jellyfish")("cotton")
 local prefer = require("infra.prefer")
+local its = require("infra.its")
 local Regulator = require("infra.Regulator")
 
 local api = vim.api
