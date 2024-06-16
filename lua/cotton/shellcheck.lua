@@ -1,8 +1,8 @@
 local M = setmetatable({}, require("cotton.Collector"))
 
-local api = vim.api
+local ni = require("infra.ni")
 
-M.ns = api.nvim_create_namespace("cotton.shellcheck")
+M.ns = ni.create_namespace("cotton.shellcheck")
 
 function M:cmd(outfile) return "shellcheck", { "--format=json", outfile } end
 

@@ -1,11 +1,9 @@
 local M = {}
 
 local jelly = require("infra.jellyfish")("cotton")
+local ni = require("infra.ni")
 local prefer = require("infra.prefer")
-local its = require("infra.its")
 local Regulator = require("infra.Regulator")
-
-local api = vim.api
 
 local availables = {
   python = { "ruff" },
@@ -17,7 +15,7 @@ local availables = {
 local regulator = Regulator(1024)
 
 function M.lint()
-  local bufnr = api.nvim_get_current_buf()
+  local bufnr = ni.get_current_buf()
   if regulator:throttled(bufnr) then return jelly.debug("no changes for a new linting") end
   regulator:update(bufnr) -- since linting will not change the buffer
 

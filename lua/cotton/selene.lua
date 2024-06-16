@@ -1,9 +1,8 @@
 local M = setmetatable({}, require("cotton.Collector"))
 local its = require("infra.its")
+local ni = require("infra.ni")
 
-local api = vim.api
-
-M.ns = api.nvim_create_namespace("cotton.selene")
+M.ns = ni.create_namespace("cotton.selene")
 
 function M:cmd(outfile) return "selene", { "--no-summary", "--display-style=json", outfile } end
 

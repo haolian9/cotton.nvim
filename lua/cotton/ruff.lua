@@ -1,9 +1,8 @@
 local M = setmetatable({}, require("cotton.Collector"))
 local itertools = require("infra.itertools")
+local ni = require("infra.ni")
 
-local api = vim.api
-
-M.ns = api.nvim_create_namespace("cotton.ruff")
+M.ns = ni.create_namespace("cotton.ruff")
 
 ---rows are 1-based
 ---@class cotton.ruff.Check.Edit
