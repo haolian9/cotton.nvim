@@ -1,9 +1,9 @@
 local M = {}
 
+local BufTickRegulator = require("infra.BufTickRegulator")
 local jelly = require("infra.jellyfish")("cotton")
 local ni = require("infra.ni")
 local prefer = require("infra.prefer")
-local Regulator = require("infra.Regulator")
 
 local availables = {
   python = { "ruff" },
@@ -12,7 +12,7 @@ local availables = {
   lua = { "selene" },
 }
 
-local regulator = Regulator(1024)
+local regulator = BufTickRegulator(1024)
 
 function M.lint()
   local bufnr = ni.get_current_buf()
