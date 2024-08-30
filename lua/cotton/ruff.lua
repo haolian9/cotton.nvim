@@ -21,7 +21,7 @@ M.ns = ni.create_namespace("cotton.ruff")
 ---@field noqa_row integer
 ---@field url string
 
-function M:cmd(outfile) return "ruff", { "--ignore-noqa", "--target-version", "py311", "--output-format=json", outfile } end
+function M:cmd(outfile) return "ruff", { "check", "--ignore-noqa", "--target-version", "py311", "--output-format=json", outfile } end
 
 ---@param plains string[]
 ---@return cotton.ruff.Check[]
